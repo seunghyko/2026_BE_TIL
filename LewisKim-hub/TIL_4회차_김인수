@@ -1,0 +1,38 @@
+# 📘 Today I Learned
+
+### 1. 오늘 배운 내용
+- 제어의 역전(IoC): 객체의 생성과 호출 권한을 내 코드가 아닌 외부 컨테이너에 넘기는 것
+- 의존성 주입(DI): IoC를 구현하는 방식이고, 생성자 주입, Setter 주입, 필드 주입 세가지 중 생성자 주입이 권장된다.
+- Bean 어노테이션: @Component, @Service, @Repository, @Controller가 있음
+- Spring MVC 구조: Dispatcher Servlet, Handler Mapping, Controller
+- http와 https 차이, http Method(GET/POST/PUT/DELETE)
+- 계층 구조: Controller -> Service -> Repository -> DB
+- DTO: 계층 간에 데이터 전달 시 Entity 대신 사용하는 객체
+
+### 2. 핵심 정리 (내 언어로)
+- 결국 원점으로 돌아가 왜 IoC와 DI가 필요할까?라고 할 때, 
+다형성을 통해 직접 수정하는 불편함을 없애고, 테스트에서 가짜 객체를 끼워넣을 수 있고, 유지보수가 가능하도록 만들 수 있다.
+- Spring을 사용하여 new 객체를 안 사용해도 된다.
+- Bean은 컨테이너가 만들고 관리하는 객체다.
+- Spring MVC 흐름은 HTTP 요청 -> Dispatcher Servlet -> HandlerMapping -> @GetMapping("/posts") -> Controller -> Service -> Repository -> DB
+- 계층별 역할 정리
+*Controller - HTTP 요청을 받고 응답을 돌려줌. 클라이언트가 무엇을 원하는지 듣고, 적절한 Service로 넘겨주고, 클라이언트한테 결과를 다시 전달해주는 역할. 교통 정리만 함
+*Service - 실제 비즈니스 규칙 처리. "주문할 때 재고를 먼저 확인하고 결제한다"와 같이 앱의 핵심 규칙들이 들어있다. 
+*Repository - DB와 직접 소통한다. DB에서 데이터를 꺼내오는 역할을 담당한다. Service는 요청만 하고, Repository는 SQL을 날리거나 DB 연결을 관리한다.
+*DTO - 계층 간의 데이터를 전달하는 객체임. Entity(=DB와 매핑되는 객체)를 외부에 그대로 넘기면 보안문제와 결합도 문제가 발생하기 때문에, 외부에 보여줄 것만 담은 별도 객체인 DTO를 만듦.
+
+### 3. 실습 / 과제 / 결과물
+- 코드:
+@RestController
+public class CommentController {
+
+    @GetMapping("/comments")
+    public String getComments() {
+        return "댓글 목록";
+    }
+}
+
+### 4. 느낀 점 & 다음 계획
+- 처음에 IoC와 DI를 봤을 때보다는 확실히 이해가 조금은 더 된 듯 느껴졌다. 
+- Spring을 통해서 개발자의 편의성이 향상됐겠구나 싶었음.
+- 계층별 역할 정리 또한 처음 봤을 때 감조차 오지 않았지만, 이제는 전반적인 플로우 자체는 감이 오기 시작한 것 같다. 
